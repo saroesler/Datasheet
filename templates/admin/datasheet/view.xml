@@ -1,0 +1,9 @@
+{* purpose of this template: datasheets view xml view in admin area *}
+{datasheeteTemplateHeaders contentType='text/xml'}<?xml version="1.0" encoding="{charset}" ?>
+<datasheets>
+{foreach item='item' from=$items}
+    {include file='admin/datasheet/include.xml'}
+{foreachelse}
+    <noDatasheet />
+{/foreach}
+</datasheets>

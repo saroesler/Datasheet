@@ -1,0 +1,56 @@
+{* purpose of this template: datasheets atom feed in admin area *}
+{datasheeteTemplateHeaders contentType='application/atom+xml'}<?xml version="1.0" encoding="{charset assign='charset'}{if $charset eq 'ISO-8859-15'}ISO-8859-1{else}{$charset}{/if}" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+{gt text='Latest datasheets' assign='channelTitle'}
+{gt text='A direct feed showing the list of datasheets' assign='channelDesc'}
+    <title type="text">{$channelTitle}</title>
+    <subtitle type="text">{$channelDesc} - {$modvars.ZConfig.slogan}</subtitle>
+    <author>
+        <name>{$modvars.ZConfig.sitename}</name>
+    </author>
+{assign var='numItems' value=$items|@count}
+{if $numItems}
+{capture assign='uniqueID'}tag:{$baseurl|replace:'http://':''|replace:'/':''},{$items[0].createdDate|dateformat|default:$smarty.now|dateformat:'%Y-%m-%d'}:{modurl modname='Datasheete' type='admin' func='display' ot='datasheet' id=$items[0].id}{/capture}
+    <id>{$uniqueID}</id>
+    <updated>{$items[0].updatedDate|default:$smarty.now|dateformat:'%Y-%m-%dT%H:%M:%SZ'}</updated>
+{/if}
+    <link rel="alternate" type="text/html" hreflang="{lang}" href="{modurl modname='Datasheete' type='admin' func='main' fqurl=1}" />
+    <link rel="self" type="application/atom+xml" href="{php}echo substr(\System::getBaseURL(), 0, strlen(\System::getBaseURL())-1);{/php}{getcurrenturi}" />
+    <rights>Copyright (c) {php}echo date('Y');{/php}, {$baseurl}</rights>
+
+{foreach item='datasheet' from=$items}
+    <entry>
+        <title type="html">{$datasheet.name|notifyfilters:'datasheete.filterhook.datasheets'}</title>
+        <link rel="alternate" type="text/html" href="{modurl modname='Datasheete' type='admin' func='display' ot='datasheet' id=$datasheet.id fqurl='1'}" />
+
+        {capture assign='uniqueID'}tag:{$baseurl|replace:'http://':''|replace:'/':''},{$datasheet.createdDate|dateformat|default:$smarty.now|dateformat:'%Y-%m-%d'}:{modurl modname='Datasheete' type='admin' func='display' ot='datasheet' id=$datasheet.id}{/capture}
+        <id>{$uniqueID}</id>
+        {if isset($datasheet.updatedDate) && $datasheet.updatedDate ne null}
+            <updated>{$datasheet.updatedDate|dateformat:'%Y-%m-%dT%H:%M:%SZ'}</updated>
+        {/if}
+        {if isset($datasheet.createdDate) && $datasheet.createdDate ne null}
+            <published>{$datasheet.createdDate|dateformat:'%Y-%m-%dT%H:%M:%SZ'}</published>
+        {/if}
+        {if isset($datasheet.createdUserId)}
+            {usergetvar name='uname' uid=$datasheet.createdUserId assign='cr_uname'}
+            {usergetvar name='name' uid=$datasheet.createdUserId assign='cr_name'}
+            <author>
+               <name>{$cr_name|default:$cr_uname}</name>
+               <uri>{usergetvar name='_UYOURHOMEPAGE' uid=$datasheet.createdUserId assign='homepage'}{$homepage|default:'-'}</uri>
+               <email>{usergetvar name='email' uid=$datasheet.createdUserId}</email>
+            </author>
+        {/if}
+
+        <summary type="html">
+            <![CDATA[
+            {$datasheet.description|truncate:150:"&hellip;"|default:'-'}
+            ]]>
+        </summary>
+        <content type="html">
+            <![CDATA[
+            {$datasheet.name|replace:'<br>':'<br />'}
+            ]]>
+        </content>
+    </entry>
+{/foreach}
+</feed>

@@ -1,0 +1,51 @@
+body {
+    background-color: #ddd;
+    margin: 10px;
+    text-align: left;
+}
+
+.datashform fieldset,
+.datashform fieldset legend {
+    background-color: #fff;
+    border: none;
+}
+
+#datashitemcontainer {
+    background-color: #eee;
+    height: 300px;
+    overflow: auto;
+    padding: 5px;
+}
+
+#datashitemcontainer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#datashitemcontainer a {
+    color: #000;
+    margin: 0.1em 0.2em;
+    text-decoration: underline;
+}
+#datashitemcontainer a:hover,
+#datashitemcontainer a:focus,
+#datashitemcontainer a:active {
+    color: #900;
+    text-decoration: none;
+}
+
+#datashitemcontainer a img {
+    border: none;
+}
+
+#datashitemcontainer a img {
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    padding: 0.5em;
+}
+#datashitemcontainer a:hover img,
+#datashitemcontainer a:focus img,
+#datashitemcontainer a:active img {
+    background-color: #fff;
+}

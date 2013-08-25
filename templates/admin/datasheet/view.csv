@@ -1,0 +1,6 @@
+{* purpose of this template: datasheets view csv view in admin area *}
+{datasheeteTemplateHeaders contentType='text/comma-separated-values; charset=iso-8859-15' asAttachment=true filename='Datasheets.csv'}
+"{gt text='Name'}";"{gt text='Kind'}";"{gt text='Datasheet'}";"{gt text='Description'}";"{gt text='Workflow state'}"
+{foreach item='datasheet' from=$items}
+    "{$datasheet.name|replace:"\"":""}";"{$datasheet.kind|datasheeteGetListEntry:'datasheet':'kind'|safetext|replace:"\"":""}";"{$datasheet.datasheet}";"{$datasheet.description|replace:"\"":""}";"{$item.workflowState|datasheeteObjectState:false|lower}"
+{/foreach}

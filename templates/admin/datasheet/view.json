@@ -1,0 +1,8 @@
+{* purpose of this template: datasheets view json view in admin area *}
+{datasheeteTemplateHeaders contentType='application/json'}
+[
+{foreach item='item' from=$items name='datasheets'}
+    {if not $smarty.foreach.datasheets.first},{/if}
+    {$item->toJson()}
+{/foreach}
+]

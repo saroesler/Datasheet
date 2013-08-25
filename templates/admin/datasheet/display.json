@@ -1,0 +1,3 @@
+{* purpose of this template: datasheets display json view in admin area *}
+{datasheeteTemplateHeaders contentType='application/json'}
+{$datasheet->toJson()}

@@ -1,0 +1,9 @@
+{* purpose of this template: datasheets xml inclusion template in admin area *}
+<datasheet id="{$item.id}" createdon="{$item.createdDate|dateformat}" updatedon="{$item.updatedDate|dateformat}">
+    <id>{$item.id}</id>
+    <name><![CDATA[{$item.name}]]></name>
+    <kind>{$item.kind|datasheeteGetListEntry:'datasheet':'kind'|safetext}</kind>
+    <datasheet{if $item.datasheet ne ''} extension="{$item.datasheetMeta.extension}" size="{$item.datasheetMeta.size}" isImage="{if $item.datasheetMeta.isImage}true{else}false{/if}"{if $item.datasheetMeta.isImage} width="{$item.datasheetMeta.width}" height="{$item.datasheetMeta.height}" format="{$item.datasheetMeta.format}"{/if}{/if}>{$item.datasheet}</datasheet>
+    <description><![CDATA[{$item.description}]]></description>
+    <workflowState>{$item.workflowState|datasheeteObjectState:false|lower}</workflowState>
+</datasheet>
